@@ -14,6 +14,9 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.12", "3.13", "3.14"]
+    defaults:
+      run:
+        working-directory: github_lab1
 
     steps:
       - name: Checkout code
@@ -23,7 +26,9 @@ jobs:
         uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
         with:
           python-version: ${{ matrix.python-version }}
+          working-directory: github_lab1
           enable-cache: true
+          cache-dependency-glob: github_lab1/uv.lock
 
       - name: Install dependencies from lockfile
         run: uv sync --locked
@@ -40,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: pytest-report-py${{ matrix.python-version }}
-          path: pytest-report.xml
+          path: github_lab1/pytest-report.xml
 
       - name: Write job summary
         if: always()
