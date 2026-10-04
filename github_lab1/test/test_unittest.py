@@ -33,6 +33,12 @@ class TestModelMetrics(unittest.TestCase):
         self.assertEqual(mm.drift_level(mm.population_stability_index(ref, shifted)), "significant")
         self.assertEqual(mm.drift_level(0.15), "moderate")
 
+    def test_asymmetric_precision_recall(self):
+        # Precision (1.0) and recall (1/3) differ here, so swapping them is caught.
+        y_true, y_pred = [1, 1, 1, 0], [1, 0, 0, 0]
+        self.assertAlmostEqual(mm.precision(y_true, y_pred), 1.0)
+        self.assertAlmostEqual(mm.recall(y_true, y_pred), 1 / 3)
+
 
 if __name__ == "__main__":
     unittest.main()
