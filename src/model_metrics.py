@@ -31,8 +31,8 @@ def confusion_counts(y_true, y_pred):
 
 
 def precision(y_true, y_pred):
-    tp, fp, _, _ = confusion_counts(y_true, y_pred)
-    return tp / (tp + fp) if (tp + fp) else 0.0
+    tp, _, fn, _ = confusion_counts(y_true, y_pred)
+    return tp / (tp + fn) if (tp + fn) else 0.0
 
 
 def recall(y_true, y_pred):
