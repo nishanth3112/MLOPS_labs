@@ -1,6 +1,6 @@
 # Lab 2: ML Model Monitoring REST API on Google Cloud Run
 
-A small Flask service that checks model metrics against configurable thresholds, packaged in Docker and ready for Google Cloud Run. It is my version of the professor's [Cloud Run Beginner Lab](https://github.com/raminmohammadi/MLOps/tree/main/Labs/GCP_Labs/Cloud_Runner_Labs/Begineer_Lab).
+A small Flask service that checks model metrics against configurable thresholds, packaged in Docker and ready for Google Cloud Run. It is my version of the Professor's [Cloud Run Beginner Lab](https://github.com/raminmohammadi/MLOps/tree/main/Labs/GCP_Labs/Cloud_Runner_Labs/Begineer_Lab).
 
 > **Scope:** `/evaluate` is a **rules-based check of metrics you supply**. It does not compute drift, calculate PSI from data, or train or load any ML model. You send in `accuracy` and `drift_psi`; it compares them to thresholds and explains the result.
 
@@ -15,9 +15,9 @@ A small Flask service that checks model metrics against configurable thresholds,
 - Read Cloud Run logs and metrics, and configure autoscaling.
 - Understand costs and clean up resources.
 
-## 2. Differences from the instructor's lab
+## 2. Differences from the Professor's lab
 
-| Instructor's lab | This lab |
+| Professor's lab | This lab |
 |---|---|
 | Flask "Hello World" with one route | Three endpoints: service info, health check, metric evaluation |
 | Plain text response | Structured JSON with thresholds, per-check results, and reasons |
@@ -334,6 +334,6 @@ gcloud projects delete YOUR_PROJECT_ID
 
 After this lab I can build and test a validated Flask API, containerize it, deploy it to Cloud Run from source, and monitor, scale, and clean it up.
 
-- Instructor's reference: [Cloud Run Beginner Lab](https://github.com/raminmohammadi/MLOps/tree/main/Labs/GCP_Labs/Cloud_Runner_Labs/Begineer_Lab)
+- Professor's reference: [Cloud Run Beginner Lab](https://github.com/raminmohammadi/MLOps/tree/main/Labs/GCP_Labs/Cloud_Runner_Labs/Begineer_Lab)
 - [Cloud Run: deploy from source](https://cloud.google.com/run/docs/deploying-source-code)
 - [Cloud Run container contract](https://cloud.google.com/run/docs/container-contract)
