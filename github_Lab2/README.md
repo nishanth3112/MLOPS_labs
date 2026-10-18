@@ -1,6 +1,6 @@
 # Lab 2: ML Model Monitoring REST API on Google Cloud Run
 
-A small Flask service that checks model metrics against configurable thresholds, packaged in Docker and ready for Google Cloud Run. It is my version of the instructor's [Cloud Run Beginner Lab](https://github.com/raminmohammadi/MLOps/tree/main/Labs/GCP_Labs/Cloud_Runner_Labs/Begineer_Lab).
+A small Flask service that checks model metrics against configurable thresholds, packaged in Docker and ready for Google Cloud Run. It is my version of the professor's [Cloud Run Beginner Lab](https://github.com/raminmohammadi/MLOps/tree/main/Labs/GCP_Labs/Cloud_Runner_Labs/Begineer_Lab).
 
 > **Scope:** `/evaluate` is a **rules-based check of metrics you supply**. It does not compute drift, calculate PSI from data, or train or load any ML model. You send in `accuracy` and `drift_psi`; it compares them to thresholds and explains the result.
 
