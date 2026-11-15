@@ -11,6 +11,7 @@ Each lab is based on a lab from the [course repository](https://github.com/ramin
 | 1 | GitHub Lab 1 | Unit testing with pytest and unittest, run automatically by GitHub Actions. Tests a machine learning metrics and data-drift module instead of the original calculator. | [`github_lab1/`](github_lab1/) |
 | 2 | Cloud Run Lab (Beginner) | An ML model monitoring REST API built with Flask. `POST /evaluate` checks supplied accuracy and drift (PSI) values against thresholds and returns `pass` or `review`. Includes input validation, 40 pytest tests, a Docker image, and a verified deployment on Google Cloud Run. Replaces the original Hello World app. | [`github_Lab2/`](github_Lab2/) ([README](github_Lab2/README.md)) |
 | 3 | DVC Lab | Data versioning with DVC and a Google Cloud Storage remote. Tracks two versions of the scikit-learn Wine dataset (V1: 178 × 14; V2: 178 × 15 with an engineered `alcohol_band` feature) that can be restored from Git history, with 8 pytest data tests. Replaces the original credit card dataset. | [`dvc_Lab3/`](dvc_Lab3/) ([README](dvc_Lab3/README.md)) |
+| 4 | Terraform GCP Lab (Beginner) | Infrastructure as code with Terraform on Google Cloud. Creates, modifies (through variables only) and destroys a Compute Engine VM and a hardened Cloud Storage bucket with shared labels, validated variables and outputs. Uses Application Default Credentials instead of a service account key, keeps state out of Git, and has 5 offline `terraform test` runs. | [`terraform_GCP_Lab4/`](terraform_GCP_Lab4/) ([README](terraform_GCP_Lab4/README.md)) |
 
 ## Tools used
 
@@ -21,6 +22,7 @@ Each lab is based on a lab from the [course repository](https://github.com/ramin
 - **Docker** and **Google Cloud Run** for containerized deployment (Lab 2)
 - **DVC** with **Google Cloud Storage** for data versioning (Lab 3)
 - **pandas** and **scikit-learn** for dataset generation (Lab 3)
+- **Terraform** with the Google provider, **Compute Engine** and **Cloud Storage** for infrastructure as code (Lab 4)
 
 ## Running a lab
 
@@ -31,10 +33,11 @@ uv sync
 uv run pytest
 ```
 
-Labs 1 and 3 use `uv`; Lab 2 uses `pip` and a `requirements.txt` (see [`github_Lab2/README.md`](github_Lab2/README.md)). Lab 3 needs `uv run dvc pull` before the tests, to download the dataset from GCS (see [`dvc_Lab3/README.md`](dvc_Lab3/README.md)).
+Labs 1 and 3 use `uv`; Lab 2 uses `pip` and a `requirements.txt` (see [`github_Lab2/README.md`](github_Lab2/README.md)). Lab 3 needs `uv run dvc pull` before the tests, to download the dataset from GCS (see [`dvc_Lab3/README.md`](dvc_Lab3/README.md)). Lab 4 uses Terraform instead of Python: run `terraform init` and `terraform test` in its folder (see [`terraform_GCP_Lab4/README.md`](terraform_GCP_Lab4/README.md)).
 
 Each lab folder has its own README with full details:
 
 - [Lab 1: `github_lab1/README.md`](github_lab1/README.md)
 - [Lab 2: `github_Lab2/README.md`](github_Lab2/README.md)
 - [Lab 3: `dvc_Lab3/README.md`](dvc_Lab3/README.md)
+- [Lab 4: `terraform_GCP_Lab4/README.md`](terraform_GCP_Lab4/README.md)
