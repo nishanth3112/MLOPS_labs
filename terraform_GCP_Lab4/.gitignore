@@ -1,0 +1,16 @@
+# Provider plugins downloaded by terraform init
+.terraform/
+
+# State can contain resource details and must never be committed
+*.tfstate
+*.tfstate.*
+
+# Local variable values and saved plans
+*.tfvars
+*.tfplan
+crash.log
+
+# Guard against committing service account keys
+*.json
+
+# .terraform.lock.hcl is intentionally NOT ignored: it pins provider versions.

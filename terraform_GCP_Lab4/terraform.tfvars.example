@@ -1,0 +1,12 @@
+# Copy to terraform.tfvars (gitignored) and edit:
+#   cp terraform.tfvars.example terraform.tfvars
+
+project_id = "mlops-cloud-run-lab-2"
+
+# Optional overrides (defaults shown):
+# region             = "us-central1"
+# zone               = "us-central1-a"
+# environment        = "dev"
+# owner              = "nishanth"
+# machine_type       = "e2-micro"
+# object_expiry_days = 30
