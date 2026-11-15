@@ -46,8 +46,8 @@ resource "google_storage_bucket" "bucket" {
   location = var.region
   labels   = local.labels
 
-  # Lets terraform destroy remove the bucket even if it still has objects.
-  force_destroy = true
+  # Refuse to delete the bucket while it still has objects (including old versions).
+  force_destroy = false
 
   uniform_bucket_level_access = true
   public_access_prevention    = "enforced"
