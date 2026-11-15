@@ -59,6 +59,11 @@ run "defaults" {
   }
 
   assert {
+    condition     = google_storage_bucket.bucket.force_destroy == false
+    error_message = "Bucket must not be deletable while it still has objects."
+  }
+
+  assert {
     condition     = google_storage_bucket.bucket.uniform_bucket_level_access
     error_message = "Bucket must use uniform bucket-level access."
   }

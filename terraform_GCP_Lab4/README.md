@@ -23,7 +23,7 @@ Same learning goals as the reference lab:
 | No variables or outputs | 7 variables (4 with validation rules) and 6 outputs |
 | Labels only on the VM, hard-coded | One shared label set applied to both resources, built from variables |
 | `f1-micro` VM on `debian-11` | `e2-micro` on `debian-12` (Debian 11 is end of life). No external IP and no service account attached. |
-| Bucket with only `force_destroy` | Uniform access, public access prevention enforced, versioning, and a lifecycle rule that deletes objects after N days |
+| Bucket with only `force_destroy = true` | Uniform access, public access prevention enforced, versioning, a lifecycle rule that deletes objects after N days, and `force_destroy = false` so a bucket with data can't be deleted by accident |
 | Modification by editing the code | Modification by changing variable values only (`environment`, `object_expiry_days`) |
 | Nothing to keep state or keys out of Git | `.gitignore` for state, tfvars, plans, `.terraform/` and `*.json` keys |
 | No tests | 5 `terraform test` runs with a mock provider, which need no credentials |
@@ -83,7 +83,7 @@ These files are created locally but **never committed** (see `.gitignore`):
 | Resource | Name | Settings |
 |---|---|---|
 | `google_compute_instance.vm` | `tf-lab4-vm` | `e2-micro`, `debian-12`, 10 GB `pd-standard` disk, `default` network, no external IP, no service account, `allow_stopping_for_update = true` |
-| `google_storage_bucket.bucket` | `<project_id>-tf-lab4` | `us-central1`, uniform bucket-level access, public access prevention `enforced`, versioning on, delete objects after `object_expiry_days`, `force_destroy = true` |
+| `google_storage_bucket.bucket` | `<project_id>-tf-lab4` | `us-central1`, uniform bucket-level access, public access prevention `enforced`, versioning on, delete objects after `object_expiry_days`, `force_destroy = false` (Terraform won't delete it while it holds objects) |
 
 Both resources get the same labels: `course=ie7374`, `lab=terraform-lab4`, `environment`, `owner`, `managed_by=terraform`. The provider also adds `goog-terraform-provisioned=true` on its own.
 
@@ -196,6 +196,14 @@ gcloud storage buckets describe gs://mlops-cloud-run-lab-2-tf-lab4    # not foun
 
 The Compute Engine API was left enabled. It costs nothing by itself.
 
+**If the bucket has objects, the destroy fails.** This is on purpose, because `force_destroy = false`. Versioning keeps old copies of objects, so delete every version first, then run the destroy again:
+
+```bash
+gcloud storage rm --all-versions "gs://mlops-cloud-run-lab-2-tf-lab4/**"
+```
+
+The recorded run above used `force_destroy = true`. I changed it to `false` after the lab as an extra safeguard. The bucket was empty, so the result would have been the same.
+
 ## 8. Tests
 
 [`tests/lab4.tftest.hcl`](tests/lab4.tftest.hcl) uses `mock_provider "google" {}`, so `terraform test` never contacts Google Cloud. Every run uses `command = plan`, and every variable is set inside the test file, so the results don't depend on a local `terraform.tfvars`. I confirmed they need no credentials by running them with the gcloud config pointed at an empty folder: all 5 passed, and `terraform.tfstate` was unchanged.
@@ -210,7 +218,8 @@ The Compute Engine API was left enabled. It costs nothing by itself.
 
 ## 9. Cost and safety notes
 
-- The VM was `e2-micro` in `us-central1` with a 10 GB standard disk and no external IP. That fits Google Cloud's always-free tier, as long as no other `e2-micro` runs on the same billing account.
+- The VM was `e2-micro` in `us-central1` with a 10 GB standard disk and no external IP. This setup may qualify for the Google Cloud Free Tier's always-free allowance, depending on current eligibility rules, usage limits and billing-account conditions. It isn't guaranteed to be free.
+- `force_destroy = false` stops Terraform from deleting the bucket while it still holds data.
 - `machine_type` only allows `e2-micro` or `e2-small`, so a typo can't create an expensive VM.
 - The bucket's lifecycle rule deletes old objects, and public access is blocked.
 - Everything was destroyed at the end and checked with `gcloud`.
